@@ -18,6 +18,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             status TEXT NOT NULL,
+            priority TEXT NOT NULL,  -- Nueva columna para la prioridad
             created_at TEXT NOT NULL
         )
     ''')
@@ -35,9 +36,10 @@ def index():
 def add_task():
     title = request.form['title']
     status = 'Pendiente'
+    priority = request.form['priority']  # Obtener la prioridad del formulario
     created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     conn = get_db_connection()
-    conn.execute('INSERT INTO tasks (title, status, created_at) VALUES (?, ?, ?)', (title, status, created_at))
+    conn.execute('INSERT INTO tasks (title, status, priority, created_at) VALUES (?, ?, ?, ?)', (title, status, priority, created_at))
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
@@ -62,11 +64,21 @@ def delete_task(task_id):
 @app.route('/filter', methods=['GET'])
 def filter_tasks():
     status = request.args.get('status')
+    priority = request.args.get('priority')
     conn = get_db_connection()
+    
+    query = 'SELECT * FROM tasks WHERE 1=1'
+    params = []
+
     if status:
-        tasks = conn.execute('SELECT * FROM tasks WHERE status = ?', (status,)).fetchall()
-    else:
-        tasks = conn.execute('SELECT * FROM tasks').fetchall()
+        query += ' AND status = ?'
+        params.append(status)
+    
+    if priority:
+        query += ' AND priority = ?'
+        params.append(priority)
+
+    tasks = conn.execute(query, params).fetchall()
     conn.close()
     return render_template('index.html', tasks=tasks)
 

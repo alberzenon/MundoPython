@@ -3,36 +3,45 @@
 {% block title %}Todas las Tareas{% endblock %}
 
 {% block content %}
-    <form action="/add" method="POST" class="mb-4">
-        <div class="input-group">
-            <input type="text" name="title" class="form-control" placeholder="Nueva tarea" required>
-            <div class="input-group-append">
-                <button class="btn btn-success" type="submit">Agregar</button>
-            </div>
+<form action="/add" method="POST" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="title" class="form-control" placeholder="Nueva tarea" required>
+        <select name="priority" class="custom-select ml-2" required>
+            <option value="">Prioridad</option>
+            <option value="Alta">Alta</option>
+            <option value="Media">Media</option>
+            <option value="Baja">Baja</option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-success" type="submit">Agregar</button>
         </div>
-    </form>
-    <ul class="list-group">
-        {% for task in tasks %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="task-title">{{ task.title }}</span>
-                <span class="text-muted small">{{ task.created_at }}</span>
-                <div class="task-actions">
-                    <span class="badge badge-pill {% if task.status == 'Pendiente' %}badge-danger{% elif task.status == 'En Proceso' %}badge-warning{% else %}badge-success{% endif %}">{{ task.status }}</span>
-                    <form action="/update/{{ task.id }}" method="POST" class="d-inline">
-                        <select name="status" class="custom-select custom-select-sm">
-                            <option value="Pendiente" {% if task.status == 'Pendiente' %}selected{% endif %}>Pendiente</option>
-                            <option value="En Proceso" {% if task.status == 'En Proceso' %}selected{% endif %}>En Proceso</option>
-                            <option value="Finalizada" {% if task.status == 'Finalizada' %}selected{% endif %}>Finalizada</option>
-                        </select>
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            <i class="fas fa-check"></i>
-                        </button>
-                    </form>
-                    <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+    </div>
+</form>
+
+<ul class="list-group">
+    {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="task-title">{{ task.title }}</span>
+            <span class="text-muted small">{{ task.created_at }}</span>
+            <span class="badge badge-pill {% if task.priority == 'Alta' %}badge-danger{% elif task.priority == 'Media' %}badge-warning{% else %}badge-success{% endif %}">{{ task.priority }}</span>
+            <div class="task-actions">
+                <span class="badge badge-pill {% if task.status == 'Pendiente' %}badge-danger{% elif task.status == 'En Proceso' %}badge-warning{% else %}badge-success{% endif %}">{{ task.status }}</span>
+                <form action="/update/{{ task.id }}" method="POST" class="d-inline">
+                    <select name="status" class="custom-select custom-select-sm">
+                        <option value="Pendiente" {% if task.status == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                        <option value="En Proceso" {% if task.status == 'En Proceso' %}selected{% endif %}>En Proceso</option>
+                        <option value="Finalizada" {% if task.status == 'Finalizada' %}selected{% endif %}>Finalizada</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-primary">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </form>
+                <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
