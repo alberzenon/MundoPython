@@ -15,6 +15,30 @@
         <p>Organiza tu día de manera eficiente</p>
     </header>
 
+    <!-- Barra de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+       
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Todas las Tareas</a>
+                </li>
+            </ul>
+            <form class="form-inline ml-auto" action="/filter" method="GET">
+                <select name="status" class="form-control mr-2">
+                    <option value="">Filtrar por estado</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Finalizada">Finalizada</option>
+                </select>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Filtrar</button>
+            </form>
+        </div>
+    </nav>
+
     <div class="container my-5">
         <form action="/add" method="POST" class="mb-4">
             <div class="input-group">
@@ -51,7 +75,7 @@
     </div>
 
     <footer class="bg-light text-center py-3">
-        <p class="mb-0">© 2024 Alberto Zenón Camacho . Todos los derechos reservados.</p>
+        <p class="mb-0">© 2024 Tu Nombre. Todos los derechos reservados.</p>
         <p><a href="#" class="text-primary">Política de Privacidad</a> | <a href="#" class="text-primary">Términos de Servicio</a></p>
     </footer>
 

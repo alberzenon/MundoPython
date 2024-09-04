@@ -27,7 +27,7 @@ def init_db():
 @app.route('/')
 def index():
     conn = get_db_connection()
-    tasks = conn.execute('SELECT * FROM tasks').fetchall()
+    tasks = conn.execute('SELECT * FROM tasks').fetchall()  # Mostrar todas las tareas por defecto
     conn.close()
     return render_template('index.html', tasks=tasks)
 
@@ -58,6 +58,17 @@ def delete_task(task_id):
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
+
+@app.route('/filter', methods=['GET'])
+def filter_tasks():
+    status = request.args.get('status')
+    conn = get_db_connection()
+    if status:
+        tasks = conn.execute('SELECT * FROM tasks WHERE status = ?', (status,)).fetchall()
+    else:
+        tasks = conn.execute('SELECT * FROM tasks').fetchall()  # Si no hay filtro, mostrar todas las tareas
+    conn.close()
+    return render_template('index.html', tasks=tasks)
 
 if __name__ == '__main__':
     init_db()

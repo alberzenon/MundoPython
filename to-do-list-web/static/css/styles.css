@@ -34,6 +34,12 @@ header {
     padding: 15px 20px; /* Espacio interno de la lista */
     border-radius: 5px; /* Bordes redondeados */
     margin-bottom: 10px; /* Espacio entre elementos de la lista */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef; /* Color de fondo al pasar el mouse */
+    transform: scale(1.02); /* Efecto de escala al pasar el mouse */
 }
 
 .list-group-item:nth-child(even) {
@@ -56,4 +62,13 @@ header {
 
 .badge-success {
     background-color: var(--success-color); /* Color para etiquetas de tareas completadas */
+}
+
+.btn {
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave para botones */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el mouse */
+    transform: scale(1.05); /* Efecto de escala al pasar el mouse */
 }
