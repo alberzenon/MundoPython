@@ -27,7 +27,7 @@ def init_db():
 @app.route('/')
 def index():
     conn = get_db_connection()
-    tasks = conn.execute('SELECT * FROM tasks').fetchall()  # Mostrar todas las tareas por defecto
+    tasks = conn.execute('SELECT * FROM tasks').fetchall()
     conn.close()
     return render_template('index.html', tasks=tasks)
 
@@ -66,9 +66,20 @@ def filter_tasks():
     if status:
         tasks = conn.execute('SELECT * FROM tasks WHERE status = ?', (status,)).fetchall()
     else:
-        tasks = conn.execute('SELECT * FROM tasks').fetchall()  # Si no hay filtro, mostrar todas las tareas
+        tasks = conn.execute('SELECT * FROM tasks').fetchall()
     conn.close()
     return render_template('index.html', tasks=tasks)
+
+@app.route('/statistics')
+def statistics():
+    conn = get_db_connection()
+    total_tasks = conn.execute('SELECT COUNT(*) FROM tasks').fetchone()[0]
+    pending_tasks = conn.execute('SELECT COUNT(*) FROM tasks WHERE status = ?', ('Pendiente',)).fetchone()[0]
+    in_progress_tasks = conn.execute('SELECT COUNT(*) FROM tasks WHERE status = ?', ('En Proceso',)).fetchone()[0]
+    completed_tasks = conn.execute('SELECT COUNT(*) FROM tasks WHERE status = ?', ('Finalizada',)).fetchone()[0]
+    conn.close()
+
+    return render_template('statistics.html', total_tasks=total_tasks, pending_tasks=pending_tasks, in_progress_tasks=in_progress_tasks, completed_tasks=completed_tasks)
 
 if __name__ == '__main__':
     init_db()

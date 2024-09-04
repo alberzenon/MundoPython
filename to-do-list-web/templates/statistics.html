@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Estadísticas{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen de Tareas</h5>
+                    <p class="card-text">Total de tareas: {{ total_tasks }}</p>
+                    <p class="card-text">Tareas pendientes: {{ pending_tasks }}</p>
+                    <p class="card-text">Tareas en proceso: {{ in_progress_tasks }}</p>
+                    <p class="card-text">Tareas completadas: {{ completed_tasks }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
