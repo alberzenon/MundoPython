@@ -1,0 +1,59 @@
+/* Colores */
+:root {
+    --primary-color: #007bff; /* Color principal */
+    --secondary-color: #6c757d; /* Color secundario */
+    --success-color: #28a745; /* Color para tareas completadas */
+    --danger-color: #dc3545; /* Color para botones de eliminación */
+}
+
+/* Diseño minimalista */
+body {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    font-family: 'Roboto', sans-serif; /* Fuente */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: var(--primary-color); /* Color principal en el encabezado */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente */
+    padding: 40px 20px; /* Espacio interno */
+}
+
+.list-group-item {
+    display: flex; /* Usar flexbox para alinear elementos */
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px; /* Espacio interno de la lista */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 10px; /* Espacio entre elementos de la lista */
+}
+
+.list-group-item:nth-child(even) {
+    background-color: #f1f1f1; /* Color de fondo alterno para elementos de la lista */
+}
+
+.badge {
+    font-size: 14px; /* Tamaño de fuente para etiquetas de estado */
+    padding: 6px 12px; /* Espacio interno de las etiquetas */
+    border-radius: 20px; /* Bordes redondeados para etiquetas */
+}
+
+.badge-danger {
+    background-color: var(--danger-color); /* Color para etiquetas de tareas pendientes */
+}
+
+.badge-warning {
+    background-color: #ffc107; /* Color para etiquetas de tareas en proceso */
+}
+
+.badge-success {
+    background-color: var(--success-color); /* Color para etiquetas de tareas completadas */
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
+        <h1>Lista de Tareas</h1>
+        <p>Organiza tu día de manera eficiente</p>
+    </header>
+
+    <div class="container my-5">
+        <form action="/add" method="POST" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="title" class="form-control" placeholder="Nueva tarea" required>
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="submit">Agregar</button>
+                </div>
+            </div>
+        </form>
+        <ul class="list-group">
+            {% for task in tasks %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="text-muted small">{{ task.created_at }}</span>
+                    <div class="task-actions">
+                        <span class="badge badge-pill {% if task.status == 'Pendiente' %}badge-danger{% elif task.status == 'En Proceso' %}badge-warning{% else %}badge-success{% endif %}">{{ task.status }}</span>
+                        <form action="/update/{{ task.id }}" method="POST" class="d-inline">
+                            <select name="status" class="custom-select custom-select-sm">
+                                <option value="Pendiente" {% if task.status == 'Pendiente' %}selected{% endif %}>Pendiente</option>
+                                <option value="En Proceso" {% if task.status == 'En Proceso' %}selected{% endif %}>En Proceso</option>
+                                <option value="Finalizada" {% if task.status == 'Finalizada' %}selected{% endif %}>Finalizada</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </form>
+                        <a href="/delete/{{ task.id }}" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer class="bg-light text-center py-3">
+        <p class="mb-0">© 2024 Alberto Zenón Camacho . Todos los derechos reservados.</p>
+        <p><a href="#" class="text-primary">Política de Privacidad</a> | <a href="#" class="text-primary">Términos de Servicio</a></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
